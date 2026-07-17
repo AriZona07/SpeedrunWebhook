@@ -4,6 +4,8 @@ Este proyecto es una aplicación de consola en C# que obtiene los mejores récor
 
 La aplicación está diseñada para ser ejecutada tanto localmente para pruebas como de forma automatizada usando GitHub Actions.
 
+**Nota:** Este proyecto utiliza una versión preliminar de .NET 10.
+
 ## Características
 
 - **Consulta a la API de Speedrun.com**: Obtiene los PBs de un usuario específico.
@@ -16,7 +18,7 @@ La aplicación está diseñada para ser ejecutada tanto localmente para pruebas 
 
 ### Prerrequisitos
 
-- [.NET SDK](https://dotnet.microsoft.com/download) (versión 6.0 o superior)
+- [.NET SDK](https://dotnet.microsoft.com/download/dotnet/10.0) (versión 10.0.302 o superior)
 - Una cuenta de GitHub para la automatización.
 - Un Webhook de Discord.
 
@@ -62,13 +64,11 @@ Para probar la aplicación en tu máquina local:
 
 ### 2. Configuración para Automatización con GitHub Actions
 
-Para que la aplicación se ejecute automáticamente en un horario definido (por ejemplo, cada 6 horas):
+Para que la aplicación se ejecute automáticamente en un horario definido:
 
 1.  **Sube el código a tu repositorio de GitHub.**
 
 2.  **Configura los Secrets en GitHub**:
-    Los secretos (secrets) son variables de entorno cifradas que solo están disponibles para los flujos de trabajo de GitHub Actions.
-
     - Ve a tu repositorio en GitHub.
     - Haz clic en **Settings** > **Secrets and variables** > **Actions**.
     - Haz clic en **New repository secret** para añadir cada una de las siguientes variables:
@@ -76,20 +76,12 @@ Para que la aplicación se ejecute automáticamente en un horario definido (por 
       - **`DISCORD_WEBHOOK_URL`**: Pega aquí la URL de tu Webhook de Discord.
       - **`SPEEDRUN_USERNAME`**: Escribe el nombre de usuario de Speedrun.com.
 
-    ![GitHub Secrets](httpsf://docs.github.com/assets/cb-123734/images/help/settings/actions-secrets-new-secret-button.png)
-
 3.  **Activa el flujo de trabajo**:
-    El flujo de trabajo definido en `.github/workflows/main.yml` se activará automáticamente según el `cron` especificado (por defecto, cada 24 horas).
-
-    También puedes ejecutarlo manualmente:
-    - Ve a la pestaña **Actions** en tu repositorio.
-    - Selecciona el flujo de trabajo **Check and Post Speedrun PBs**.
-    - Haz clic en **Run workflow**.
+    El flujo de trabajo definido en `.github/workflows/main.yml` se activará automáticamente según el `cron` especificado. También puedes ejecutarlo manualmente desde la pestaña **Actions** de tu repositorio.
 
 ## Estructura del Código
 
-- **`Program.cs`**: Lógica principal de la aplicación. Lee las variables de entorno, consulta las APIs y envía el mensaje.
-- **`SpeedrunWebhook.csproj`**: Archivo de proyecto que define las dependencias, como `DotNetEnv` para cargar el archivo `.env` en desarrollo local.
-- **`.env.example`**: Plantilla para el archivo de configuración local.
-- **`.gitignore`**: Asegura que los archivos sensibles como `.env` no se incluyan en el control de versiones.
-- **`.github/workflows/main.yml`**: Define el flujo de trabajo de GitHub Actions para la ejecución automatizada.
+- **`Program.cs`**: Lógica principal de la aplicación.
+- **`SpeedrunWebhook.csproj`**: Archivo de proyecto que define el `TargetFramework` a `net10.0` y las dependencias.
+- **`global.json`**: Asegura que se utilice el SDK de .NET 10.
+- **`.github/workflows/main.yml`**: Define el flujo de trabajo de GitHub Actions para la ejecución automatizada con .NET 10.
