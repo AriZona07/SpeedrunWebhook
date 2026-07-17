@@ -1,0 +1,6 @@
+# Archivos de configuración local que contienen secretos
+.env
+
+# Directorios de compilación de .NET
+bin/
+obj/

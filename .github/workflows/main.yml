@@ -1,0 +1,33 @@
+name: Check and Post Speedrun PBs
+
+on:
+  # Se ejecuta cada 6 horas. Puedes ajustar el horario según tus necesidades.
+  # El formato es (minuto, hora, día, mes, día de la semana).
+  schedule:
+    - cron: '0 */24 * * *'
+  # Permite ejecutar este flujo de trabajo manualmente desde la pestaña Actions en GitHub.
+  workflow_dispatch:
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Run the application
+      run: dotnet run
+      env:
+        # Estas variables se obtienen de los "Secrets" del repositorio de GitHub.
+        # Ve a tu Repositorio > Settings > Secrets and variables > Actions para configurarlos.
+        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        SPEEDRUN_USERNAME: ${{ secrets.SPEEDRUN_USERNAME }}
