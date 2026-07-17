@@ -79,7 +79,7 @@ Para que la aplicación se ejecute automáticamente en un horario definido (por 
     ![GitHub Secrets](httpsf://docs.github.com/assets/cb-123734/images/help/settings/actions-secrets-new-secret-button.png)
 
 3.  **Activa el flujo de trabajo**:
-    El flujo de trabajo definido en `.github/workflows/main.yml` se activará automáticamente según el `cron` especificado (por defecto, cada 6 horas).
+    El flujo de trabajo definido en `.github/workflows/main.yml` se activará automáticamente según el `cron` especificado (por defecto, cada 24 horas).
 
     También puedes ejecutarlo manualmente:
     - Ve a la pestaña **Actions** en tu repositorio.
